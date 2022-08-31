@@ -1,0 +1,87 @@
+.App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.top {
+    flex-grow: 1;
+}
+
+
+.footer {
+    background-color: grey;
+}
+
+.form-check {
+    margin: 2% 3%;
+    background-color: lightgray;
+    border: 2px solid grey;
+    border-radius: 5px;
+
+
+}
+
+.form-check:hover{
+    background-color: lightslategray;
+}
+
+.form-check:checked{
+    background-color: lightslategray;
+}
+
+input[type="radio"]:checked {
+    margin-left: 5px;
+    border: 1px solid blue;
+
+}
+
+input[type="checkbox"]:checked {
+    border: 2px solid blue;
+
+}
+
+
+.tdActive {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: red;
+    border: 10px solid black;
+
+}
+
+.td {
+    cursor: pointer;
+}
+
+.formControl {
+    font-weight: bold;
+}
+
+.button {
+    margin: 5px;
+}
+
+.blockStyle {
+    background-color: #999aa350;
+    padding: 15px;
+    margin: 3% 3%;
+    border-radius: 20px
+}
+.name{
+    text-transform: capitalize;
+}
+
+.upperCase{
+    text-transform: uppercase;
+}
+
+.testLabel{
+    font-size: 1.8em;
+    margin-top: 2%;
+}
+
+.none{
+    display: none;
+}

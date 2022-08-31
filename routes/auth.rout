@@ -1,0 +1,83 @@
+const {Router} = require('express')
+const router = Router()
+const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const config = require("config")
+const User = require("../models/users")
+const {validationResult, check} = require("express-validator");
+
+//   /api/auth/register
+router.post("/register",
+
+    [
+        check("email", "incorrect email").isEmail(),
+        check("password", "no password ").exists()
+        // check("password", "min password length 6 characters ").isLength({min: 6})
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: "Помилка! Перевірте пошту та пароль. "
+                })
+            }
+            const {email, name, password, grade} = req.body
+            const student = await User.findOne({email: email})
+            if (student) {
+                return res.status(400).json({message: "Користувач вже існує"})
+            }
+            const hashedPassword = await bcrypt.hash(password, 12)
+            const user = new User({email: email, name: name, password: hashedPassword, grade: grade})
+            await user.save()
+            res.status(201).json({message: "Користувач створений"})
+
+        } catch (e) {
+            // console.log(e)
+            res.status(501).json({message: "Помилка створення користувача!"})
+        }
+    })
+
+//   /api/auth/login
+router.post("/login",
+    [
+        check('email', "incorrect email").isEmail(),
+        check("password", "no password ").exists()
+    ],
+    async (req, res) => {
+
+        try {
+
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: "Перевірте Логін та Пароль"
+                })
+            }
+
+            const {email, password} = req.body
+            const user = await User.findOne({email: email})
+            if (!user) {
+                return res.status(400).json({message: "Користувач не знайдений"})
+            }
+            const isMatch = await bcrypt.compare(password, user.password)
+
+            if (!isMatch) {
+                return req.status(400).json({message: "Невірний пароль"})
+            }
+            const token = jwt.sign(
+                {userId: user.id},
+                config.get("jwtKey"),
+                {expiresIn: "2h"}
+            )
+            res.json({token, userId: user.id, position: user.position})
+
+        } catch (e) {
+            res.status(500).json({message: "Помилка входу!"})
+        }
+    })
+
+module.exports = router
