@@ -5,10 +5,10 @@ const AddQuestionFree = ({number, changeHandler}) => {
     const type = "free"
       return (
             <div>
-                <Form.Label>Питання {number}</Form.Label>
+                <Form.Label className={"testLabel"}>Питання {number}</Form.Label>
                 <Form.Control className={"formControl"}
                               name={`Q${number}`}
-                              type={"text"}
+                              // type={"text"}
                               placeholder={`Введіть питання (${number})`}
                               onChange={()=>changeHandler(event,number, type)}
                 />

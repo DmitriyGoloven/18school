@@ -43,4 +43,34 @@ router.post("/dayTest", auth,
 
     })
 
+router.post("/myTests",auth,
+
+    async (req, res) => {
+
+        try {
+            const {userID} = req.body
+            const tests = await Test.find({'teacherID': userID}, 'theme date grade')
+            res.json(tests)
+
+        } catch (e) {
+            res.status(500).json({message: "err /Request serv"})
+        }
+
+    })
+
+router.delete("/testDel",
+
+    async (req, res) => {
+
+        try {
+            const {testID} = req.body
+            const user = await Test.findOneAndDelete({_id: testID})
+            res.json({message: "Тест видалений"})
+
+        } catch (e) {
+            res.status(500).json({message: "err /Request serv"})
+        }
+
+    })
+
 module.exports = router

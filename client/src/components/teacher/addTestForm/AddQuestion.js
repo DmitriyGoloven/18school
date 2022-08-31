@@ -7,7 +7,7 @@ const AddQuestion = ({number, changeHandler}) => {
     return (
         <div>
         <Form.Group key={number} className="mb-3">
-            <Form.Label> Питання {number} </Form.Label>
+            <Form.Label className={"testLabel"}> Питання {number} </Form.Label>
             <Form.Control className={"formControl"}
                           name={`Q${number}`}
                           type={"text"}

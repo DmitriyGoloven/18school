@@ -13,11 +13,8 @@ const NavBar = () => {
 
                 <div className="justify-content-start">
 
-                    <h3 style={{color:"whitesmoke"}}>Самооцінка<br/>учнів</h3>
-                    {/*<Button variant={"secondary"}*/}
-                    {/*        onClick={() => {*/}
-                    {/*            navigate("/student", {replace: true})*/}
-                    {/*        }}>Учень</Button>*/}
+                    <h3 style={{color:"whitesmoke"}}>Тестування<br/>для учнів</h3>
+
                 </div>
                             <Navbar.Brand
                                 onClick={() => {
@@ -35,23 +32,6 @@ const NavBar = () => {
 
                             </Navbar.Brand>
 
-                {/*<Navbar.Toggle aria-controls="responsive-navbar-nav" />*/}
-                {/*<Navbar.Collapse id="responsive-navbar-nav">*/}
-                {/*    <Nav className="me-auto" style={{justifyContent: "center"}}>*/}
-                {/*            <NavLink className={"App-link"} to={"/student"}>Учні</NavLink>*/}
-                {/*            /!*<NavLink className={"App-link"} to={"/teacher"}>Вчитель</NavLink>*!/*/}
-                {/*    </Nav>*/}
-
-                {/*    <div className="justify-content-end">*/}
-
-                {/*        <Button variant={"secondary"}*/}
-                {/*                onClick={() => {*/}
-                {/*                    navigate("/teacher", {replace: true})*/}
-                {/*                }}>Вчитель</Button>*/}
-                {/*    </div>*/}
-
-                {/*</Navbar.Collapse>*/}
-
             <div className="justify-content-end" style={{margin: "0 30px"}}>
 
                 <Button variant={"secondary"}
@@ -63,10 +43,6 @@ const NavBar = () => {
                             navigate("/auth", {replace: true})
                         }}>Вийти</Button>
 
-                {/*<Button variant={"secondary"}*/}
-                {/*        onClick={() => {*/}
-                {/*            navigate("/teacher", {replace: true})*/}
-                {/*        }}>Вчитель</Button>*/}
             </div>
 
 

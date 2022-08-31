@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {NavLink, useNavigate} from "react-router-dom";
-import FormRegistry from "./registration/FormRegistry";
-import {Col, Container,Button, Form, Nav, Row, Table} from "react-bootstrap";
-import {useHttp} from "../../hooks/http.hook";
+import {Container, Nav} from "react-bootstrap";
+import {Link, Navigate, useNavigate} from "react-router-dom";
+import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
-import FormQuestions from "./addTestForm/FormQuestions";
-import Navigation from "./Navigation";
-import AddQuestion from "./addTestForm/AddQuestion";
-import MyTests from "./MyTests";
+import Navigation from "../Navigation";
+import FormQuestions from "../addTestForm/FormQuestions";
+import FormRegistry from "./FormRegistry";
 
-
-const Teacher = () => {
+const RegisterAndChange = () => {
 
     const navigate = useNavigate()
     const localUserID = localStorage.getItem("userToken")
@@ -27,9 +24,7 @@ const Teacher = () => {
     const {loading, request} = useHttp()
     const [user, setUser] = useState([])
 
-
     const getUser = async () => {
-        console.log("getuser")
         try {
             const userID = await localStorage.getItem("userID")
             const data = await request("/api/data/user", "POST", {userID}
@@ -46,16 +41,15 @@ const Teacher = () => {
         }
     }
 
-
     return (
         <Container>
-            <Navigation user={user}/>
-            <FormQuestions localUserID={localUserID}/>
-
-            <MyTests localUserID={localUserID}
-                     userID={user._id}/>
+            <div>
+                <Navigation user={user}/>
+                <FormRegistry/>
+            </div>
         </Container>
+
     );
 };
 
-export default Teacher;
+export default RegisterAndChange;

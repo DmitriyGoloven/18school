@@ -5,7 +5,7 @@ const AddQuestionPicker = ({number, changeHandler}) => {
 const type = "picker"
   return (
         <div>
-            <Form.Label>Питання {number}</Form.Label>
+            <Form.Label className={"testLabel"}>Питання {number}</Form.Label>
             <Form.Control className={"formControl"}
                           name={`Q${number} P`}
                           type={"text"}

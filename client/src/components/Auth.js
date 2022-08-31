@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 
 const Auth = () => {
 
-    const {loading, error, request, clearError} = useHttp()
+    const {loading, request} = useHttp()
 
     const [form, setForm] = useState({
         email: "", password: ""
@@ -18,13 +18,6 @@ const Auth = () => {
         localStorage.setItem("userPosition", position)
     }, [])
 
-
-    useEffect(() => {
-        if (error) {
-            toast.error(`${error}`)
-            clearError()
-        }
-    }, [error, clearError])
 
     const navigate = useNavigate()
 

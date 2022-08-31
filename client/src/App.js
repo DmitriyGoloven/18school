@@ -10,6 +10,8 @@ import Children from "./components/student/Children";
 import Auth from "./components/Auth";
 import Footer from "./components/layout/Footer";
 import Student from "./components/student/Student";
+import RegisterAndChange from "./components/teacher/registration/RegisterAndChange";
+import Assessment from "./components/teacher/assessment/Assessment";
 
 function App() {
     return (
@@ -25,6 +27,8 @@ function App() {
                         <Route exact path="/*" element={<Auth/>}/>
                         <Route exact path="/teacher" element={<Teacher/>}/>
                         <Route exact path="/student" element={<Student/>}/>
+                        <Route exact path="/register" element={<RegisterAndChange/>}/>
+                        <Route exact path="/assessment" element={<Assessment/>}/>
                         <Route exact path="/auth" element={<Auth/>}/>
                     </Routes>
 

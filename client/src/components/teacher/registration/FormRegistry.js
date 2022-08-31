@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Form, Button, Container} from "react-bootstrap"
-import {useHttp} from "../../hooks/http.hook";
+import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 
-const FormRegistry = ({getStudents}) => {
+const FormRegistry = () => {
 
     const {loading, request} = useHttp()
 
@@ -11,12 +11,6 @@ const FormRegistry = ({getStudents}) => {
         email: "", password: "", name: "", grade: ""
     })
 
-    // useEffect(() => {
-    //     if (error) {
-    //         toast.error(`${error}`)
-    //         clearError()
-    //     }
-    // }, [error, clearError])
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -35,7 +29,6 @@ const FormRegistry = ({getStudents}) => {
 
                 document.getElementById("form").reset()
 
-                getStudents()
             }
         } catch (e) {
             console.log(e)
