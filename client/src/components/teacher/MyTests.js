@@ -39,17 +39,19 @@ const MyTests = ({userID,localUserID}) => {
             if (data.message) {
                 toast.info(data.message)
             }
-            getTests().then()
+            getTests(userID)
 
         } catch (e) {
             console.log(e)
         }
     }
+    const button = document.getElementById("buttonSave")
+    {button && button.addEventListener("click", ()=>{getTests(userID)})}
 
-    useEffect(() => {
+        useEffect(() => {
 
         getTests(userID)
-    }, [userID,loading])
+    }, [userID])
 
     return (
         <Container>
@@ -57,13 +59,13 @@ const MyTests = ({userID,localUserID}) => {
             <div className={"blockStyle"}>
                 <Row>
                     <Col >
-                        <Table striped bordered hover size="xl">
+                        <Table  striped bordered hover size="xs">
                             <thead>
                             <tr>
-                                <th>Дата тесту</th>
-                                <th>Клас</th>
-                                <th>Тема тесту</th>
-                                <th>X</th>
+                                <th >Дата тесту</th>
+                                <th >Клас</th>
+                                <th >Тема тесту</th>
+                                <th >X</th>
                             </tr>
                             </thead>
                             <tbody>

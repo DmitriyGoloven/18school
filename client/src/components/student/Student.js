@@ -32,9 +32,6 @@ const Student = () => {
     const {loading, request} = useHttp()
 
 
-
-    console.log(user)
-
     const dateNow = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
 
     const getUser = async () => {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {NavLink, useNavigate} from "react-router-dom";
 import FormRegistry from "./registration/FormRegistry";
-import {Col, Container,Button, Form, Nav, Row, Table} from "react-bootstrap";
+import {Col, Container, Button, Form, Nav, Row, Table} from "react-bootstrap";
 import {useHttp} from "../../hooks/http.hook";
 import {toast} from "react-toastify";
 import FormQuestions from "./addTestForm/FormQuestions";
@@ -21,7 +21,7 @@ const Teacher = () => {
             navigate('/auth');
         }
         getUser()
-    }, [localUserID, navigate])
+    }, [])
 
 
     const {loading, request} = useHttp()
@@ -29,7 +29,7 @@ const Teacher = () => {
 
 
     const getUser = async () => {
-        console.log("getuser")
+
         try {
             const userID = await localStorage.getItem("userID")
             const data = await request("/api/data/user", "POST", {userID}
@@ -46,12 +46,11 @@ const Teacher = () => {
         }
     }
 
-
     return (
         <Container>
             <Navigation user={user}/>
             <FormQuestions localUserID={localUserID}/>
-
+            <h2>Мої тести</h2>
             <MyTests localUserID={localUserID}
                      userID={user._id}/>
         </Container>
