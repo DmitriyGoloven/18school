@@ -4,28 +4,21 @@ import Question from "./Question";
 import QuestionFree from "./QuestionFree";
 import QuestionPicker from "./QuestionPicker";
 import {useHttp} from "../../../hooks/http.hook";
+import {toast} from "react-toastify";
 
 
-const FormTest = ({test, userID}) => {
+const FormTest = ({test, userID, setUser}) => {
 
     const dateNow = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
 
     const [answer, setAnswer] = useState({testID: test._id, theme: test.theme, date: dateNow, answers: {}})
 
-
     const {loading, request} = useHttp()
 
     const localUserID = localStorage.getItem("userToken")
 
-    // const changeHandler =(event, number)=>{
-    //     // console.log({...answer, [event.target.name]: event.target.value})
-    //     setAnswer({...answer, [event.target.name]: event.target.value})
-    //     console.log({...answer})
-    // }
-
     const changeHandler = (event, number, pickerName) => {
 
-        console.log([event.target.name], event.target.value, event.target.checked, pickerName)
         let answer2 = answer
         if (pickerName) {
             if (event.target.checked && answer2.answers[pickerName]) {
@@ -39,28 +32,34 @@ const FormTest = ({test, userID}) => {
                delete answer2.answers[pickerName][event.target.name]
             }
             setAnswer(answer2)
-            console.log(answer)
+
             return
         }
 
         answer2.answers[event.target.name] = event.target.value
         setAnswer(answer2)
-        console.log(answer)
+
     }
 
     const saveHandler = async () => {
         try {
-            const date = new Date().toLocaleString()
 
+            const dataUser = await request("/api/data/user", "post", {userID},
+                {Authorization: `Bearer ${localUserID}`})
+            const userAnswers = dataUser.assessment
 
+            const assess = {...userAnswers,[answer.testID]: answer}
+
+            const user = { ...dataUser, assessment: assess }
             const data = await request("/api/data/answer", "POST",
-                {assessment: answer, userID: userID},
+                {assessment: assess, userID: userID},
                 {Authorization: `Bearer ${localUserID}`}
             )
 
             if (data.message) {
                 toast.info(data.message)
             }
+            if(data.message === "Відповідь прийнята")setUser(user)
 
 
         } catch (e) {
@@ -110,13 +109,14 @@ const FormTest = ({test, userID}) => {
 
                 <div>
                     <Button
-                        onClick={() => {
-                        }}
+                        onClick={
+                            saveHandler
+                        }
                         variant="secondary"
                         size="lg"
                         // type="submit"
                         className="button"
-                        // disabled={}
+
                     >
                         Зберегти відповіді
                     </Button>

@@ -171,9 +171,9 @@ const FormQuestions = ({localUserID}) => {
                         onClick={sendForm}
                         variant="secondary"
                         size="lg"
-                        // type="submit"
+                        type="submit"
                         className="button"
-                        disabled={!form.date || !form.theme || !form.grade}
+                        disabled={!form.theme || !form.grade}
                     >
                         Створити опитування
                     </Button>

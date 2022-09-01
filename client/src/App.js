@@ -6,7 +6,6 @@ import {ToastContainer} from "react-toastify";
 import {Routes, BrowserRouter, Route} from "react-router-dom"
 import NavBar from "./components/layout/NavBar";
 import Teacher from "./components/teacher/Teacher";
-import Children from "./components/student/Children";
 import Auth from "./components/Auth";
 import Footer from "./components/layout/Footer";
 import Student from "./components/student/Student";

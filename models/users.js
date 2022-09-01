@@ -6,7 +6,7 @@ const userSchema = new Schema({
     password: {type: String, required: true},
     position: {type: String, default: "student"},
     grade: {type: String, uppercase: true},
-    assessment: {type: Array, default: []}
+    assessment: {type: Object, default: {}}
 
 })
 

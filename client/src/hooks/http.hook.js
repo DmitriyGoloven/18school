@@ -1,4 +1,5 @@
 import {useCallback, useState} from "react";
+import {toast} from "react-toastify";
 
 export const useHttp = () => {
 
@@ -21,12 +22,11 @@ export const useHttp = () => {
 
             const data = await response.json()
             if (response.status === 401) {
-                localStorage.removeItem("userToken")
+                localStorage.clear()
             }
 
             if (!response.ok) {
-
-                console.log(data.message || "response Error")
+                toast.info(data.message || "response Error")
             }
 
             setLoading(false)

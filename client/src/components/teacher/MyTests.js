@@ -1,20 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigate} from "react-router-dom";
 import {useHttp} from "../../hooks/http.hook";
 import {toast} from "react-toastify";
 import {Col, Container, Row, Table} from "react-bootstrap";
-import Navigation from "./Navigation";
 
-const MyTests = ({userID,localUserID}) => {
+
+const MyTests = ({userID, localUserID}) => {
 
     const [tests, setTests] = useState(null)
 
+    document.getElementById("buttonSave").
+    addEventListener("mousedown",()=>{console.log("click")})
 
+    const {loading, request} = useHttp()
 
-
-    const {loading,request} = useHttp()
-
-    const getTests =useCallback( async (userID) => {
+    const getTests = async (userID) => {
+        console.log("FGettest s14")
         try {
             const data = await request("/api/test/myTests", "POST", {userID}
                 , {Authorization: `Bearer ${localUserID}`}
@@ -28,7 +28,7 @@ const MyTests = ({userID,localUserID}) => {
         } catch (e) {
             console.log(e)
         }
-    },[tests])
+    }
 
     const delTest = async (testID) => {
         try {
@@ -39,48 +39,49 @@ const MyTests = ({userID,localUserID}) => {
             if (data.message) {
                 toast.info(data.message)
             }
-            getTests(userID)
+            getTests(userID).then(() => {
+                console.log("Fdel s38")
+            })
 
         } catch (e) {
             console.log(e)
         }
     }
-    const button = document.getElementById("buttonSave")
-    {button && button.addEventListener("click", ()=>{getTests(userID)})}
 
-        useEffect(() => {
-
-        getTests(userID)
-    }, [userID])
+    useEffect(() => {
+        getTests(userID).then(() => {
+            console.log("useefect s47")
+        })
+    }, [])
 
     return (
         <Container>
 
             <div className={"blockStyle"}>
                 <Row>
-                    <Col >
-                        <Table  striped bordered hover size="xs">
+                    <Col>
+                        <Table striped bordered hover size="xs">
                             <thead>
                             <tr>
-                                <th >Дата тесту</th>
-                                <th >Клас</th>
-                                <th >Тема тесту</th>
-                                <th >X</th>
+                                <th>Дата тесту</th>
+                                <th>Клас</th>
+                                <th>Тема тесту</th>
+                                <th>X</th>
                             </tr>
                             </thead>
                             <tbody>
                             {tests && tests.map((test, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td className={ "td"}>
+                                        <td >
 
                                             {test.date}
                                         </td>
-                                        <td className={ "td"}>
+                                        <td >
 
                                             {test.grade}
                                         </td>
-                                        <td className={ "td"}>
+                                        <td >
 
                                             {test.theme}
                                         </td>

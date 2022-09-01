@@ -38,7 +38,7 @@ router.post("/user", auth,
     })
 
 ///   api/data
-router.post("/userDel",
+router.delete("/userDel",
 
     async (req, res) => {
 
@@ -59,7 +59,7 @@ router.get("/students",
     async (req, res) => {
 
         try {
-            const students = await User.find({'position': "student"}, 'name')
+            const students = await User.find({'position': "student"}, 'name grade')
             res.json(students)
 
         } catch (e) {

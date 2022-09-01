@@ -34,7 +34,8 @@ const Assessment = () => {
             if (data.message) {
                 toast.info(data.message)
             }
-            setStudent(data)
+            // setStudent(data)
+            console.log(data)
 
         } catch (e) {
             console.log(e)
@@ -43,7 +44,7 @@ const Assessment = () => {
 
     const delStudent = async (userID) => {
         try {
-            const data = await request("/api/data/userDel", "POST", {userID}
+            const data = await request("/api/data/userDel", "DELETE", {userID}
                 , {Authorization: `Bearer ${localUserID}`}
             )
 
@@ -126,6 +127,7 @@ const Assessment = () => {
                             <thead>
                             <tr>
                                 <th>Імʼя учня</th>
+                                <th>Клас</th>
                                 <th>X</th>
                             </tr>
                             </thead>
@@ -139,6 +141,12 @@ const Assessment = () => {
                                             }}>
                                             {children.name}
                                         </td>
+                                    <td className={student && children.name === student.name ? "tdActive" : "td"}
+                                        onClick={() => {
+                                            getStudent(children._id)
+                                        }}>
+                                        {children.grade}
+                                    </td>
                                         <td style={{cursor: "pointer"}}
                                             onClick={() => {
                                                 delStudent(children._id)
@@ -159,8 +167,9 @@ const Assessment = () => {
                             <thead>
                             <tr>
                                 <th>Дата</th>
+                                <th>Тема</th>
                                 <th>Відповідь</th>
-                                <th>X</th>
+
                             </tr>
                             </thead>
                             <tbody>

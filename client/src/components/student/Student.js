@@ -3,11 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useHttp} from "../../hooks/http.hook";
 import {toast} from "react-toastify";
 import {Button, Col, Container, Form, Row, Table} from "react-bootstrap";
-import AssesList from "../layout/assesList";
 import FormTest from "./tests/FormTest";
-import Question from "./tests/Question";
-import QuestionFree from "./tests/QuestionFree";
-import QuestionPicker from "./tests/QuestionPicker";
 
 
 const Student = () => {
@@ -47,7 +43,6 @@ const Student = () => {
             setUser(data)
 
 
-
         } catch (e) {
             console.log(e)
         }
@@ -75,47 +70,50 @@ const Student = () => {
     }, [user])
 
 
-
-    // const saveHandler = async () => {
-    //     try {
-    //         const date = new Date().toLocaleString()
-    //         user.assessment.push([date, value])
-    //
-    //         const data = await request("/api/data/answer", "POST",
-    //             {assessment: user.assessment, userID: userID},
-    //             {Authorization: `Bearer ${localUserID}`}
-    //         )
-    //
-    //         if (data.message) {
-    //             toast.info(data.message)
-    //         }
-    //
-    //
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
     return (
         <Container>
             {user &&
             <div>
                 <h2>{user.name} {user.grade}</h2>
             </div>}
+
             <br/>
 
+            {dayTest && dayTest.map((test, index) => {
+                if (Object.keys(user.assessment).includes(test._id, 0))
+                    return (<h3 className={"blockStyle"}
+                                key={index}
+                    >{`Тест: "${test.theme}" відовіді прийняті на перевірку.`}
+                    </h3>)
 
-            {dayTest && dayTest.map((test, index)=>{
-               return (<div key={index}><FormTest userID={userID} test={test}/></div>)
+                return (<div key={index}><FormTest setUser={setUser} userID={userID} test={test}/></div>)
 
-            })}
-
-            {/*{user && <div className={"blockStyle"}>*/}
-            {/*    <AssesList assessment={user.assessment}/>*/}
-            {/*</div>}*/}
+            })
+            }
+            <h3>Зараховані тести</h3>
+            {user && (<Table striped bordered size="sm">
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Тема</th>
+                </tr>
+                </thead>
+                <tbody>
+                {Object.values(user.assessment).map((test, index) => {
+                    return (<tr key={index}>
+                        <td>{test.date}</td>
+                        <td>{test.theme}</td>
+                    </tr>)
+                })}
+                </tbody>
+            </Table>)
+            }
 
         </Container>
     )
 }
 
+
 export default Student;
+
+
