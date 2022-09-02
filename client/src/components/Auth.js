@@ -28,23 +28,25 @@ const Auth = () => {
 
             localUserPosition === "teacher" ? navigate('/teacher') : navigate('/student')
 
-    }}, [localUserID, navigate])
+    }}, [localUserID])
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
     }
 
-    const loginHandler = async () => {
+    const loginHandler = useCallback(async () => {
+
         try {
             const data = await request("/api/auth/login", "POST", {...form})
-            login(data.token, data.userId, data.position)
+
             if (data.message) {
                 toast.info(data.message)
-            }
+
+            } else {login(data.token, data.userId, data.position)}
         } catch (e) {
             console.log(e)
         }
-    }
+    },[form])
 
     return (
         <div>

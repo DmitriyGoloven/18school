@@ -3,7 +3,7 @@ import {Form, Button, Container} from "react-bootstrap"
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 
-const FormRegistry = () => {
+const FormRegistry = ({getStudents}) => {
 
     const {loading, request} = useHttp()
 
@@ -28,13 +28,12 @@ const FormRegistry = () => {
                 await setForm({...form, email: "", password: "", name: ""})
 
                 document.getElementById("form").reset()
-
+                getStudents()
             }
         } catch (e) {
             console.log(e)
         }
     }
-
 
     return (
         <div className={"blockStyle"}>

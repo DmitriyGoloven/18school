@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const config = require("config")
 const User = require("../models/users")
 const {validationResult, check} = require("express-validator");
+const auth = require("./authMiddleware")
 
 //   /api/auth/register
 router.post("/register",
@@ -51,6 +52,7 @@ router.post("/login",
         try {
 
             const errors = validationResult(req)
+
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
@@ -66,18 +68,53 @@ router.post("/login",
             const isMatch = await bcrypt.compare(password, user.password)
 
             if (!isMatch) {
-                return req.status(400).json({message: "Невірний пароль"})
+                return res.status(400).json({message: "Невірний пароль"})
             }
             const token = jwt.sign(
                 {userId: user.id},
                 config.get("jwtKey"),
-                {expiresIn: "2h"}
+                {expiresIn: "4h"}
             )
             res.json({token, userId: user.id, position: user.position})
 
         } catch (e) {
             res.status(500).json({message: "Помилка входу!"})
         }
+    })
+
+//   /api/auth/change
+router.post("/change", auth,
+    [
+        check('email', "incorrect email").isEmail(),
+        check("name", "no name ").exists(),
+        check("grade", "no grade ").exists()
+    ],
+
+    async (req, res) => {
+
+        try {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: "Помилка! Перевірте пошту та пароль. "
+                })
+            }
+            const {email, name, grade, position, password, userID} = req.body
+           const hashedPassword = password && await bcrypt.hash(password, 12)
+            const userData = password ?
+                {email:email, name:name, grade:grade, position:position, password:hashedPassword} :
+                {email:email, name:name, grade:grade, position:position}
+
+            await User.updateOne({_id: userID}, {$set: userData})
+
+            res.status(201).json({message: "Данні збережено"})
+
+        } catch (e) {
+            res.status(500).json({message: "Помилка запису"})
+        }
+
     })
 
 module.exports = router

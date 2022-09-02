@@ -26,7 +26,7 @@ export const useHttp = () => {
             }
 
             if (!response.ok) {
-                toast.info(data.message || "response Error")
+                console.log(data.message || "response Error")
             }
 
             setLoading(false)
@@ -37,9 +37,8 @@ export const useHttp = () => {
             console.log(e)
         }
 
+
     }, [])
-
-
 
     return {loading, request}
 }

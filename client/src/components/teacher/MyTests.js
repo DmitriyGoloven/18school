@@ -4,31 +4,9 @@ import {toast} from "react-toastify";
 import {Col, Container, Row, Table} from "react-bootstrap";
 
 
-const MyTests = ({userID, localUserID}) => {
-
-    const [tests, setTests] = useState(null)
-
-    document.getElementById("buttonSave").
-    addEventListener("mousedown",()=>{console.log("click")})
+const MyTests = ({getTests,tests,userID, localUserID}) => {
 
     const {loading, request} = useHttp()
-
-    const getTests = async (userID) => {
-        console.log("FGettest s14")
-        try {
-            const data = await request("/api/test/myTests", "POST", {userID}
-                , {Authorization: `Bearer ${localUserID}`}
-            )
-
-            if (data.message) {
-                toast.info(data.message)
-            }
-            setTests(data)
-
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
     const delTest = async (testID) => {
         try {
@@ -39,9 +17,7 @@ const MyTests = ({userID, localUserID}) => {
             if (data.message) {
                 toast.info(data.message)
             }
-            getTests(userID).then(() => {
-                console.log("Fdel s38")
-            })
+            getTests(userID)
 
         } catch (e) {
             console.log(e)
@@ -50,7 +26,6 @@ const MyTests = ({userID, localUserID}) => {
 
     useEffect(() => {
         getTests(userID).then(() => {
-            console.log("useefect s47")
         })
     }, [])
 

@@ -59,7 +59,7 @@ router.get("/students",
     async (req, res) => {
 
         try {
-            const students = await User.find({'position': "student"}, 'name grade')
+            const students = await User.find({'position': "student"}, 'name grade').sort({ grade: 1 }).populate('name')
             res.json(students)
 
         } catch (e) {

@@ -63,7 +63,7 @@ const FormTest = ({test, userID, setUser}) => {
 
 
         } catch (e) {
-            console.log(e)
+            alert(e)
         }
     }
 

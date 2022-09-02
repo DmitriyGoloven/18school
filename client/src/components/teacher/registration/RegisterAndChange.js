@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Nav, Row, Table} from "react-bootstrap";
+import {Col, Container, Nav, Modal, Table} from "react-bootstrap";
 import {Link, Navigate, useNavigate} from "react-router-dom";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 import Navigation from "../Navigation";
 import FormQuestions from "../addTestForm/FormQuestions";
 import FormRegistry from "./FormRegistry";
+import FormStudent from "./FormStudent";
+
 
 const RegisterAndChange = () => {
 
@@ -26,6 +28,10 @@ const RegisterAndChange = () => {
     const [user, setUser] = useState([])
     const [students, setStudents] = useState([])
     const [student, setStudent] = useState(null)
+    const [show, setShow] = useState(false)
+
+    const HandleClose = () => {setShow(false);getStudents()}
+    const HandleShow = () => setShow(true)
 
     const getStudent = async (userID) => {
         try {
@@ -36,8 +42,9 @@ const RegisterAndChange = () => {
             if (data.message) {
                 toast.info(data.message)
             }
-            // setStudent(data)
-            console.log(data)
+            setStudent(data)
+            HandleShow()
+            console.log("registerandch s46",data)
 
         } catch (e) {
             console.log(e)
@@ -74,6 +81,7 @@ const RegisterAndChange = () => {
             setStudents(data)
 
 
+
         } catch (e) {
             console.log(e)
         }
@@ -98,11 +106,13 @@ const RegisterAndChange = () => {
         }
     }
 
+
+
     return (
         <Container>
             <div>
                 <Navigation user={user}/>
-                <FormRegistry/>
+                <FormRegistry getStudents={getStudents}/>
             </div>
 
             <div className={"blockStyle"}>
@@ -118,6 +128,7 @@ const RegisterAndChange = () => {
                             </thead>
                             <tbody>
                             {students && students.map((children, index) => {
+
                                 return (
                                     <tr key={index}>
                                         <td className={"td"}
@@ -126,7 +137,7 @@ const RegisterAndChange = () => {
                                             }}>
                                             {children.name}
                                         </td>
-                                        <td className={"td"}
+                                        <td
                                             onClick={() => {
                                                 getStudent(children._id)
                                             }}>
@@ -141,11 +152,24 @@ const RegisterAndChange = () => {
 
                                     </tr>
                                 )
-                            })}
+                            })
+                            }
                             </tbody>
                         </Table>
 
             </div>
+
+            <Modal show={show} onHide={HandleClose}>
+                <Modal.Header closeButton>
+                    <h3>
+                        Данні користовача
+                    </h3>
+                </Modal.Header>
+                <Modal.Body style={{textAlign: "center"}}>
+                    <FormStudent student={student} HandleClose={HandleClose}/>
+                </Modal.Body>
+
+            </Modal>
 
         </Container>
 

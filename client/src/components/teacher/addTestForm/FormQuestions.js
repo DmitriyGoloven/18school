@@ -8,7 +8,7 @@ import {toast} from "react-toastify";
 import {useHttp} from "../../../hooks/http.hook";
 
 
-const FormQuestions = ({localUserID}) => {
+const FormQuestions = ({localUserID, getTests}) => {
 
     const dateNow = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
     const teacherID = localStorage.getItem("userID")
@@ -84,10 +84,11 @@ const FormQuestions = ({localUserID}) => {
             }
 
             if (data) {
-
+                getTests(teacherID)
                 setForm({teacherID: teacherID, questions: {}, date: dateNow})
                 setQuestions([])
                 setNum(0)
+
                 document.getElementById("formTheme").reset()
             }
 
@@ -171,7 +172,7 @@ const FormQuestions = ({localUserID}) => {
                         onClick={sendForm}
                         variant="secondary"
                         size="lg"
-                        type="submit"
+                        // type="submit"
                         className="button"
                         disabled={!form.theme || !form.grade}
                     >

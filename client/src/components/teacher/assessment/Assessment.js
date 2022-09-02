@@ -42,21 +42,6 @@ const Assessment = () => {
         }
     }
 
-    const delStudent = async (userID) => {
-        try {
-            const data = await request("/api/data/userDel", "DELETE", {userID}
-                , {Authorization: `Bearer ${localUserID}`}
-            )
-
-            if (data.message) {
-                toast.info(data.message)
-            }
-            getStudents()
-
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
     const delAsses = async (index) => {
         const item = {...student}

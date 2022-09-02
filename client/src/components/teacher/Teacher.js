@@ -27,6 +27,7 @@ const Teacher = () => {
 
     const {loading, request} = useHttp()
     const [user, setUser] = useState([])
+    const [tests, setTests] = useState(null)
 
 
     const getUser = async () => {
@@ -47,13 +48,28 @@ const Teacher = () => {
         }
     }
 
+    const getTests = async (userID) => {
+        try {
+            const data = await request("/api/test/myTests", "POST", {userID}
+                , {Authorization: `Bearer ${localUserID}`}
+            )
+
+            if (data.message) {
+                toast.info(data.message)
+            }
+            setTests(data)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <Container>
             <Navigation user={user}/>
-            <FormQuestions localUserID={localUserID}/>
+            <FormQuestions localUserID={localUserID} getTests={getTests}/>
             <h2>Мої тести</h2>
-            {user._id && <MyTests localUserID={localUserID}
-                     userID={user._id}/>}
+            {user._id && <MyTests userID={userID} getTests={getTests} tests={tests}/>}
         </Container>
     );
 };

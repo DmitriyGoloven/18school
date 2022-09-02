@@ -8,7 +8,7 @@ const NavBar = () => {
     let navigate = useNavigate();
 
     return (
-        <Navbar expand="md" bg="dark" variant="dark">
+        <Navbar style={{opacity:"0.8"}} expand="md" bg="dark" variant="dark">
             <Container>
 
                 <div className="justify-content-start">

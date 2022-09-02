@@ -44,7 +44,7 @@ const Student = () => {
 
 
         } catch (e) {
-            console.log(e)
+            alert(e)
         }
     }
 
@@ -99,7 +99,8 @@ const Student = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {Object.values(user.assessment).map((test, index) => {
+                {user.assessment &&
+                Object.values(user.assessment).map((test, index) => {
                     return (<tr key={index}>
                         <td>{test.date}</td>
                         <td>{test.theme}</td>
