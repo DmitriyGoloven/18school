@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Nav, Row, Table} from "react-bootstrap";
+import {Accordion, Card, Col, Container, Nav, Row, Table, useAccordionButton} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 import Navigation from "../Navigation";
+import According from "./According";
 
 const Assessment = () => {
 
@@ -20,50 +21,50 @@ const Assessment = () => {
     }, [localUserID, navigate])
 
 
-    const {loading,request} = useHttp()
+    const {loading, request} = useHttp()
     const [user, setUser] = useState([])
     const [students, setStudents] = useState([])
-    const [student, setStudent] = useState(null)
+    // const [student, setStudent] = useState(null)
 
-    const getStudent = async (userID) => {
-        try {
-            const data = await request("/api/data/user", "POST", {userID}
-                , {Authorization: `Bearer ${localUserID}`}
-            )
-
-            if (data.message) {
-                toast.info(data.message)
-            }
-            // setStudent(data)
-            console.log(data)
-
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-
-    const delAsses = async (index) => {
-        const item = {...student}
-
-        item.assessment.splice(index, 1)
-        setStudent(item)
-
-        try {
-
-            const data = await request("/api/data/answer", "POST", {assessment: student.assessment, userID: student._id}
-                , {Authorization: `Bearer ${localUserID}`}
-            )
-
-            if (data.message === "Відповідь прийнята") {
-                toast.info("Відповідь видалена")
-            } else toast.info(data.message)
+    // const getStudent = async (userID) => {
+    //     try {
+    //         const data = await request("/api/data/user", "POST", {userID}
+    //             , {Authorization: `Bearer ${localUserID}`}
+    //         )
+    //
+    //         if (data.message) {
+    //             toast.info(data.message)
+    //         }
+    //         // setStudent(data)
+    //         console.log(data)
+    //
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
 
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    // const delAsses = async (index) => {
+    //     const item = {...student}
+    //
+    //     item.assessment.splice(index, 1)
+    //     setStudent(item)
+    //
+    //     try {
+    //
+    //         const data = await request("/api/data/answer", "POST", {assessment: student.assessment, userID: student._id}
+    //             , {Authorization: `Bearer ${localUserID}`}
+    //         )
+    //
+    //         if (data.message === "Відповідь прийнята") {
+    //             toast.info("Відповідь видалена")
+    //         } else toast.info(data.message)
+    //
+    //
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // }
 
 
     const getStudents = async () => {
@@ -77,7 +78,6 @@ const Assessment = () => {
                 toast.info(data.message)
             }
             setStudents(data)
-
 
         } catch (e) {
             console.log(e)
@@ -101,81 +101,63 @@ const Assessment = () => {
         }
     }
 
+
     return (
         <Container>
             <Navigation user={user}/>
 
+            {/*<div className={"blockStyle"}>*/}
+
+
+            {/*    <Table striped bordered hover size="xs">*/}
+            {/*        <thead>*/}
+            {/*        <tr>*/}
+            {/*            <th>Імʼя учня</th>*/}
+            {/*            <th>Клас</th>*/}
+            {/*            <th>X</th>*/}
+            {/*        </tr>*/}
+            {/*        </thead>*/}
+            {/*        <tbody>*/}
+            {/*        {students && students.map((children, index) => {*/}
+
+            {/*            return (*/}
+            {/*                <tr key={index}>*/}
+            {/*                    <td className={"td"}*/}
+            {/*                        onClick={() => {*/}
+            {/*                            getStudent(children._id)*/}
+            {/*                        }}>*/}
+            {/*                        {children.name}*/}
+            {/*                    </td>*/}
+            {/*                    <td*/}
+            {/*                        onClick={() => {*/}
+            {/*                            getStudent(children._id)*/}
+            {/*                        }}>*/}
+            {/*                        {children.grade}*/}
+            {/*                    </td>*/}
+            {/*                    <td style={{cursor: "pointer"}}*/}
+            {/*                        onClick={() => {*/}
+            {/*                            delStudent(children._id)*/}
+            {/*                        }}>*/}
+            {/*                        X*/}
+            {/*                    </td>*/}
+
+            {/*                </tr>*/}
+            {/*            )*/}
+            {/*        })*/}
+            {/*        }*/}
+            {/*        </tbody>*/}
+            {/*    </Table>*/}
+
+            {/*</div>*/}
             <div className={"blockStyle"}>
-                <Row>
-                    <Col xl={5} md={5} xs={12}>
-                        <Table striped bordered hover size="xs">
-                            <thead>
-                            <tr>
-                                <th>Імʼя учня</th>
-                                <th>Клас</th>
-                                <th>X</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {students && students.map((children, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td className={student && children.name === student.name ? "tdActive" : "td"}
-                                            onClick={() => {
-                                                getStudent(children._id)
-                                            }}>
-                                            {children.name}
-                                        </td>
-                                    <td className={student && children.name === student.name ? "tdActive" : "td"}
-                                        onClick={() => {
-                                            getStudent(children._id)
-                                        }}>
-                                        {children.grade}
-                                    </td>
-                                        <td style={{cursor: "pointer"}}
-                                            onClick={() => {
-                                                delStudent(children._id)
-                                            }}>
-                                            X
-                                        </td>
+                {students && students.map((student, index) => {
 
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </Table>
-                    </Col>
-                    <Col xl={7} md={7} xs={12} style={{textAlign: "center"}}>
+                    return (
+                        <According key={index} student={student} index={index} />
+                    )
 
-                        {student &&
-                        <Table striped bordered hover size="xs">
-                            <thead>
-                            <tr>
-                                <th>Дата</th>
-                                <th>Тема</th>
-                                <th>Відповідь</th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {student.assessment.map((asses, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{asses[0]}</td>
-                                        <td>{asses[1]}</td>
-                                        <td style={{cursor: "pointer"}} onClick={() => {
-                                            delAsses(index)
-                                        }}>X
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </Table>}
-                    </Col>
-                </Row>
+                })}
             </div>
-
         </Container>
     );
 };
