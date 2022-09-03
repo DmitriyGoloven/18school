@@ -4,10 +4,8 @@ import {useHttp} from "../../hooks/http.hook";
 import {toast} from "react-toastify";
 import FormQuestions from "./addTestForm/FormQuestions";
 import Navigation from "./Navigation";
-
 import MyTests from "./MyTests";
 import {useNavigate} from "react-router-dom";
-
 
 const Teacher = () => {
 
@@ -22,13 +20,11 @@ const Teacher = () => {
             navigate('/auth');
         }
         getUser()
-    }, [navigate,userID])
-
+    }, [navigate, userID])
 
     const {loading, request} = useHttp()
     const [user, setUser] = useState([])
     const [tests, setTests] = useState(null)
-
 
     const getUser = async () => {
 

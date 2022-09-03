@@ -1,8 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useHttp} from "../../hooks/http.hook";
 import {toast} from "react-toastify";
 import {Col, Container, Row, Table} from "react-bootstrap";
-
 
 const MyTests = ({getTests,tests,userID, localUserID}) => {
 
@@ -66,7 +65,6 @@ const MyTests = ({getTests,tests,userID, localUserID}) => {
                                             }}>
                                             X
                                         </td>
-
                                     </tr>
                                 )
                             })}

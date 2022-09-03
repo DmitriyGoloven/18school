@@ -30,8 +30,6 @@ function App() {
                         <Route exact path="/assessment" element={<Assessment/>}/>
                         <Route exact path="/auth" element={<Auth/>}/>
                     </Routes>
-
-
                 </BrowserRouter>
             </div>
             <Footer/>

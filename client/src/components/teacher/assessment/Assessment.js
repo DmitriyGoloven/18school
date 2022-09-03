@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Accordion, Card, Col, Container, Modal, Nav, Row, Table, useAccordionButton} from "react-bootstrap";
-import {Link, useNavigate} from "react-router-dom";
+import {Container, Modal, Row} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 import Navigation from "../Navigation";
@@ -66,46 +66,47 @@ const Assessment = () => {
         }
     }
 
-
     return (
         <Container>
             <Navigation user={user}/>
             <div className={"blockStyle"}>
                 {students && students.map((student, index) => {
-
                     return (
-                        <According key={index} setTest={setTest} HandleShow={HandleShow} student={student} index={index}/>
+                        <According key={index} setTest={setTest} HandleShow={HandleShow} student={student}
+                                   index={index}/>
                     )
-
                 })}
             </div>
 
-            {test && <> <Modal size="lg" show={show} onHide={HandleClose}>
-                <Modal.Header closeButton >
-                   <h3>{test.theme}</h3>
+            {test && <> <Modal size="xl" show={show} onHide={HandleClose}>
+                <Modal.Header closeButton>
+                    <h3>{test.theme}</h3>
                 </Modal.Header>
-                <Modal.Body >
+                <Modal.Body>
 
                     <Row key={test._id} className={"blockStyle"}>
                         {Object.entries(test.answers).map((answer, index) => {
-                            return (<>
-                                <Row key={index}>
-                                    <h3>{index+1}) {answer[0]}</h3>
+                            return (<div key={index} style={{marginTop: "25px"}}>
+                                <Row key={answer[0]}>
+                                    <h3>{index + 1}) {answer[0]}</h3>
                                 </Row>
-                                <Row key={index+1} style={{backgroundColor: "white", marginLeft: "0px", borderRadius: "10px"}}>
-                                    <span key={index -1} style={{textAlign:"center", fontSize: "1.4em"}}>{typeof answer[1] === "string" ? answer[1] :
-                                        Object.values(answer[1]).map((ans,index)=>{return (<p key={index}>` ${ans}; `</p>)})
+                                <Row key={index}
+                                     style={{backgroundColor: "white", marginLeft: "0px", borderRadius: "10px"}}>
+                                    <span key={index - 1} style={{
+                                        textAlign: "center",
+                                        fontSize: "1.4em"
+                                    }}>{typeof answer[1] === "string" ? answer[1] :
+                                        Object.values(answer[1]).map((ans, index) => {
+                                            return (<p key={index}>` ${ans}; `</p>)
+                                        })
                                     }</span>
                                 </Row>
-                            </>)
+                            </div>)
                         })}
                     </Row>
                 </Modal.Body>
-
-
-                    </Modal>
-                    </>}
-
+            </Modal>
+            </>}
         </Container>
     );
 };

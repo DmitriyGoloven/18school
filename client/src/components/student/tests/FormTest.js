@@ -6,7 +6,6 @@ import QuestionPicker from "./QuestionPicker";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 
-
 const FormTest = ({test, userID, setUser}) => {
 
     const dateNow = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
@@ -24,12 +23,11 @@ const FormTest = ({test, userID, setUser}) => {
             if (event.target.checked && answer2.answers[pickerName]) {
                 answer2.answers[pickerName][event.target.name] = event.target.value
 
-            } else if (event.target.checked && !answer2.answers[pickerName]){
+            } else if (event.target.checked && !answer2.answers[pickerName]) {
                 answer2.answers[pickerName] = {}
                 answer2.answers[pickerName][event.target.name] = event.target.value
-            }
-            else if (!event.target.checked ){
-               delete answer2.answers[pickerName][event.target.name]
+            } else if (!event.target.checked) {
+                delete answer2.answers[pickerName][event.target.name]
             }
             setAnswer(answer2)
 
@@ -48,9 +46,9 @@ const FormTest = ({test, userID, setUser}) => {
                 {Authorization: `Bearer ${localUserID}`})
             const userAnswers = dataUser.assessment
 
-            const assess = {...userAnswers,[answer.testID]: answer}
+            const assess = {...userAnswers, [answer.testID]: answer}
 
-            const user = { ...dataUser, assessment: assess }
+            const user = {...dataUser, assessment: assess}
             const data = await request("/api/data/answer", "POST",
                 {assessment: assess, userID: userID},
                 {Authorization: `Bearer ${localUserID}`}
@@ -59,7 +57,7 @@ const FormTest = ({test, userID, setUser}) => {
             if (data.message) {
                 toast.info(data.message)
             }
-            if(data.message === "Відповідь прийнята")setUser(user)
+            if (data.message === "Відповідь прийнята") setUser(user)
 
 
         } catch (e) {
@@ -93,7 +91,6 @@ const FormTest = ({test, userID, setUser}) => {
         })
     }, [])
 
-
     return (
         <div>
 
@@ -109,20 +106,15 @@ const FormTest = ({test, userID, setUser}) => {
 
                 <div>
                     <Button
-                        onClick={
-                            saveHandler
-                        }
+                        onClick={saveHandler}
                         variant="secondary"
                         size="lg"
-                        // type="submit"
                         className="button"
-
                     >
                         Зберегти відповіді
                     </Button>
                 </div>
             </Form>
-
         </div>
     )
 }

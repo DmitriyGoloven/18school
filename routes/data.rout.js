@@ -18,7 +18,6 @@ router.post("/answer", auth,
         } catch (e) {
             res.status(500).json({message: "Помилка запису"})
         }
-
     })
 
 ///   api/data
@@ -34,7 +33,6 @@ router.post("/user", auth,
         } catch (e) {
             res.status(500).json({message: "err /Request serv"})
         }
-
     })
 
 ///   api/data
@@ -50,7 +48,6 @@ router.delete("/userDel",
         } catch (e) {
             res.status(500).json({message: "err /Request serv"})
         }
-
     })
 
 //   api/data
@@ -59,7 +56,7 @@ router.get("/students",
     async (req, res) => {
 
         try {
-            const students = await User.find({'position': "student"}, 'name grade').sort({ grade: 1 }).populate('name')
+            const students = await User.find({'position': "student"}, 'name grade').sort({grade: 1}).populate('name')
             res.json(students)
 
         } catch (e) {
@@ -67,25 +64,5 @@ router.get("/students",
         }
 
     })
-
-
-// router.delete("/delTest",
-//
-//     async (req, res) => {
-//
-//         try {
-//             const {testID, studentID} = req.body
-//             const student = await User.find({_id: studentID})
-//             const assessment = student.assessment
-//             console.log("ass" + assessment, "testid" + testID)
-//
-//             // res.json({message: "Учень видалений"})
-//
-//         } catch (e) {
-//             res.status(500).json({message: "err /Request serv"})
-//         }
-//
-//     })
-
 
 module.exports = router

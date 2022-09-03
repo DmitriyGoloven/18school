@@ -23,12 +23,13 @@ const Auth = () => {
 
     const localUserID = localStorage.getItem("userToken")
     useEffect(() => {
-        if (localUserID){
+        if (localUserID) {
             const localUserPosition = localStorage.getItem("userPosition")
 
             localUserPosition === "teacher" ? navigate('/teacher') : navigate('/student')
 
-    }}, [localUserID])
+        }
+    }, [localUserID])
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -42,11 +43,13 @@ const Auth = () => {
             if (data.message) {
                 toast.info(data.message)
 
-            } else {login(data.token, data.userId, data.position)}
+            } else {
+                login(data.token, data.userId, data.position)
+            }
         } catch (e) {
             console.log(e)
         }
-    },[form])
+    }, [form])
 
     return (
         <div>

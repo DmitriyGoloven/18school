@@ -1,5 +1,4 @@
 import {useCallback, useState} from "react";
-import {toast} from "react-toastify";
 
 export const useHttp = () => {
 
@@ -36,7 +35,6 @@ export const useHttp = () => {
             setLoading(false)
             console.log(e)
         }
-
 
     }, [])
 

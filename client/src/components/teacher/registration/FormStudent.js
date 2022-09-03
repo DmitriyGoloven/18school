@@ -34,11 +34,9 @@ const FormStudent = ({student, HandleClose}) => {
         }
     }
 
-
     return (
 
         <Form>
-
             <Form.Group className="mb-3">
                 <Form.Label className={"testLabel"}>Email учня</Form.Label>
                 <Form.Control
@@ -59,9 +57,7 @@ const FormStudent = ({student, HandleClose}) => {
                 <Form.Label className={"testLabel"}>Пароль</Form.Label>
                 <Form.Control
                     name={"password"}
-                    // type="password"
                     type="text"
-                    // defaultValue={}
                     placeholder={"Змінити пароль"}
                     onChange={changeHandler}
                 />
@@ -73,13 +69,6 @@ const FormStudent = ({student, HandleClose}) => {
                               defaultValue={student.grade}
                               onChange={changeHandler}
                 />
-                {/*<Form.Label className={"testLabel"}>student або teacher</Form.Label>*/}
-                {/*<Form.Control*/}
-                {/*    name={"position"}*/}
-                {/*    type="text"*/}
-                {/*    defaultValue={student.position}*/}
-                {/*    onChange={changeHandler}*/}
-                {/*/>*/}
 
                 <Form.Label className={"testLabel"}>student або teacher</Form.Label>
                 <Form.Select name={"position"} defaultValue={"student"} onChange={changeHandler}>
@@ -96,13 +85,10 @@ const FormStudent = ({student, HandleClose}) => {
                 onClick={changeRegisterHandler}
                 variant="secondary"
                 size="lg"
-                // type="submit"
-
             >
                 Зберегти данні
             </Button>
         </Form>
-
     );
 };
 

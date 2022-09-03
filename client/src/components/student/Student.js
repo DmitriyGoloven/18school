@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useHttp} from "../../hooks/http.hook";
 import {toast} from "react-toastify";
-import {Button, Col, Container, Form, Row, Table} from "react-bootstrap";
+import {Container, Table} from "react-bootstrap";
 import FormTest from "./tests/FormTest";
 
 
@@ -24,9 +24,7 @@ const Student = () => {
         getUser()
     }, [])
 
-
     const {loading, request} = useHttp()
-
 
     const dateNow = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '').split(" ")[0]
 
@@ -42,9 +40,8 @@ const Student = () => {
             }
             setUser(data)
 
-
         } catch (e) {
-            alert(e)
+            console.log(e)
         }
     }
 
@@ -76,14 +73,13 @@ const Student = () => {
             <div>
                 <h2>{user.name} {user.grade}</h2>
             </div>}
-
             <br/>
-
-            {dayTest && dayTest.map((test, index) => {
-                if (Object.keys(user.assessment).includes(test._id, 0))
+            {dayTest && user && dayTest.map((test, index) => {
+                let testReady
+                {user.assessment && (testReady = Object.keys(user.assessment).includes(test._id, 0))}
+                if (testReady)
                     return (<h3 className={"blockStyle"}
-                                key={index}
-                    >{`Тест: "${test.theme}" відовіді прийняті на перевірку.`}
+                                key={index}>{`Тест: "${test.theme}" відовіді прийняті на перевірку.`}
                     </h3>)
 
                 return (<div key={index}><FormTest setUser={setUser} userID={userID} test={test}/></div>)
@@ -109,12 +105,10 @@ const Student = () => {
                 </tbody>
             </Table>)
             }
-
         </Container>
     )
 }
 
-
-export default Student;
+export default Student
 
 

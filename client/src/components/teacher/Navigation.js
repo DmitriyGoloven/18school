@@ -5,8 +5,7 @@ import {NavLink} from "react-router-dom";
 const Navigation = ({user}) => {
     return (
         <div>
-
-            <Nav fill variant="tabs" style={{margin:"1.5em 0"}}>
+            <Nav fill variant="tabs" style={{margin: "1.5em 0"}}>
                 <Nav.Item>
                     <NavLink className={"App-link"} to="/teacher">Додати тест</NavLink>
                 </Nav.Item>

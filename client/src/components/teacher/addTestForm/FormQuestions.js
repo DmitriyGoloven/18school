@@ -1,12 +1,10 @@
 import React, {useCallback, useState} from 'react';
 import {Button, Col, Form, Row} from "react-bootstrap";
-import {v4 as uuidv4} from "uuid"
 import AddQuestion from "./AddQuestion";
 import AddQuestionFree from "./AddQuestionFree";
 import AddQuestionPicker from "./AddQuestionPicker";
 import {toast} from "react-toastify";
 import {useHttp} from "../../../hooks/http.hook";
-
 
 const FormQuestions = ({localUserID, getTests}) => {
 
@@ -19,9 +17,7 @@ const FormQuestions = ({localUserID, getTests}) => {
 
     const {loading, request} = useHttp()
 
-
     const changeHandler = (event, numb,type) => {
-        // setForm({...form,[event.target.name]: event.target.value})
         let form2 = form
         if (event.target.name === 'grade') {
             event.target.value = event.target.value.toUpperCase()
@@ -41,9 +37,7 @@ const FormQuestions = ({localUserID, getTests}) => {
         }
         form2[event.target.name] = event.target.value
         setForm(form2)
-
     }
-
 
 // Додаткове питання
     const addQuestion = useCallback(() => {
@@ -97,7 +91,6 @@ const FormQuestions = ({localUserID, getTests}) => {
         }
     }
 
-// return
     return (
         <div>
             <Form id={"formTheme"} className={"blockStyle"}>
@@ -147,7 +140,6 @@ const FormQuestions = ({localUserID, getTests}) => {
 
                 })}
 
-
                 <Button className={"button"} variant="outline-secondary" size="md"
                         onClick={addQuestion}
                 >
@@ -166,21 +158,17 @@ const FormQuestions = ({localUserID, getTests}) => {
                     Додати питання <br/> (декілька відповідей)
                 </Button>
 
-
                 <div id={"buttonSave"}>
                     <Button
                         onClick={sendForm}
                         variant="secondary"
                         size="lg"
-                        // type="submit"
                         className="button"
                         disabled={!form.theme || !form.grade}
                     >
                         Створити опитування
                     </Button>
                 </div>
-
-
             </Form>
         </div>
 

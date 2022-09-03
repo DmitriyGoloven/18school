@@ -9,7 +9,6 @@
     flex-grow: 1;
 }
 
-
 .footer {
     background-color: grey;
 }
@@ -20,14 +19,13 @@
     border: 2px solid grey;
     border-radius: 5px;
 
-
 }
 
-.form-check:hover{
+.form-check:hover {
     background-color: lightslategray;
 }
 
-.form-check:checked{
+.form-check:checked {
     background-color: lightslategray;
 }
 
@@ -42,7 +40,6 @@ input[type="checkbox"]:checked {
 
 }
 
-
 .tdActive {
     cursor: pointer;
     text-decoration: underline;
@@ -56,7 +53,7 @@ input[type="checkbox"]:checked {
 }
 
 .formControl {
-    margin: 10px ;
+    margin: 10px;
     font-weight: bold;
 }
 
@@ -70,20 +67,21 @@ input[type="checkbox"]:checked {
     margin: 3% 3%;
     border-radius: 20px
 }
-.name{
+
+.name {
     text-transform: capitalize;
 }
 
-.upperCase{
+.upperCase {
     text-transform: uppercase;
 }
 
-.testLabel{
+.testLabel {
     font-size: 1.5em;
     margin-top: 1em;
 }
 
-.none{
+.none {
     display: none;
 }
 
@@ -93,11 +91,12 @@ input[type="checkbox"]:checked {
     text-decoration: none;
 
 }
-.App-link:hover{
+
+.App-link:hover {
     color: dimgray;
 }
 
-.active{
+.active {
     color: black;
     border-bottom: 3px solid black;
     /*margin: 5px;*/

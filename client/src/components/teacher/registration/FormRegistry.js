@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Form, Button, Container} from "react-bootstrap"
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
@@ -10,7 +10,6 @@ const FormRegistry = ({getStudents}) => {
     const [form, setForm] = useState({
         email: "", password: "", name: "", grade: ""
     })
-
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -54,10 +53,10 @@ const FormRegistry = ({getStudents}) => {
 
                         <Form.Label>Повне ім'я учня</Form.Label>
                         <Form.Control className={"name"}
-                            name={"name"}
-                            type={"text"}
-                            placeholder="Ім'я"
-                            onChange={changeHandler}
+                                      name={"name"}
+                                      type={"text"}
+                                      placeholder="Ім'я"
+                                      onChange={changeHandler}
                         />
 
                         <Form.Label>Пароль</Form.Label>
@@ -71,10 +70,10 @@ const FormRegistry = ({getStudents}) => {
 
                         <Form.Label>Клас</Form.Label>
                         <Form.Control className={"upperCase"}
-                            name={"grade"}
-                            type="text"
-                            placeholder="5А"
-                            onChange={changeHandler}
+                                      name={"grade"}
+                                      type="text"
+                                      placeholder="5А"
+                                      onChange={changeHandler}
                         />
                     </Form.Group>
 

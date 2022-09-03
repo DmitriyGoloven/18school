@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Nav, Modal, Table} from "react-bootstrap";
-import {Link, Navigate, useNavigate} from "react-router-dom";
+import {Container, Modal, Table} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 import Navigation from "../Navigation";
-import FormQuestions from "../addTestForm/FormQuestions";
 import FormRegistry from "./FormRegistry";
 import FormStudent from "./FormStudent";
 
@@ -30,7 +29,11 @@ const RegisterAndChange = () => {
     const [student, setStudent] = useState(null)
     const [show, setShow] = useState(false)
 
-    const HandleClose = () => {setShow(false);getStudents()}
+    const HandleClose = () => {
+        setShow(false);
+        getStudents()
+    }
+
     const HandleShow = () => setShow(true)
 
     const getStudent = async (userID) => {
@@ -44,7 +47,7 @@ const RegisterAndChange = () => {
             }
             setStudent(data)
             HandleShow()
-            console.log("registerandch s46",data)
+            console.log("registerandch s46", data)
 
         } catch (e) {
             console.log(e)
@@ -67,27 +70,21 @@ const RegisterAndChange = () => {
         }
     }
 
-
     const getStudents = async () => {
         try {
 
             const data = await request("/api/data/students", "GET", null
-                , {Authorization: `Bearer ${localUserID}`}
-            )
+                , {Authorization: `Bearer ${localUserID}`})
 
             if (data.message) {
                 toast.info(data.message)
             }
             setStudents(data)
 
-
-
         } catch (e) {
             console.log(e)
         }
     }
-
-
 
     const getUser = async () => {
         try {
@@ -106,8 +103,6 @@ const RegisterAndChange = () => {
         }
     }
 
-
-
     return (
         <Container>
             <div>
@@ -117,46 +112,44 @@ const RegisterAndChange = () => {
 
             <div className={"blockStyle"}>
 
+                <Table striped bordered hover size="xs">
+                    <thead>
+                    <tr>
+                        <th>Імʼя учня</th>
+                        <th>Клас</th>
+                        <th>X</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {students && students.map((children, index) => {
 
-                        <Table striped bordered hover size="xs">
-                            <thead>
-                            <tr>
-                                <th>Імʼя учня</th>
-                                <th>Клас</th>
-                                <th>X</th>
+                        return (
+                            <tr key={index}>
+                                <td className={"td"}
+                                    onClick={() => {
+                                        getStudent(children._id)
+                                    }}>
+                                    {children.name}
+                                </td>
+                                <td
+                                    onClick={() => {
+                                        getStudent(children._id)
+                                    }}>
+                                    {children.grade}
+                                </td>
+                                <td style={{cursor: "pointer"}}
+                                    onClick={() => {
+                                        delStudent(children._id)
+                                    }}>
+                                    X
+                                </td>
+
                             </tr>
-                            </thead>
-                            <tbody>
-                            {students && students.map((children, index) => {
-
-                                return (
-                                    <tr key={index}>
-                                        <td className={"td"}
-                                            onClick={() => {
-                                                getStudent(children._id)
-                                            }}>
-                                            {children.name}
-                                        </td>
-                                        <td
-                                            onClick={() => {
-                                                getStudent(children._id)
-                                            }}>
-                                            {children.grade}
-                                        </td>
-                                        <td style={{cursor: "pointer"}}
-                                            onClick={() => {
-                                                delStudent(children._id)
-                                            }}>
-                                            X
-                                        </td>
-
-                                    </tr>
-                                )
-                            })
-                            }
-                            </tbody>
-                        </Table>
-
+                        )
+                    })
+                    }
+                    </tbody>
+                </Table>
             </div>
 
             <Modal show={show} onHide={HandleClose}>
@@ -168,11 +161,8 @@ const RegisterAndChange = () => {
                 <Modal.Body style={{textAlign: "center"}}>
                     <FormStudent student={student} HandleClose={HandleClose}/>
                 </Modal.Body>
-
             </Modal>
-
         </Container>
-
     );
 };
 

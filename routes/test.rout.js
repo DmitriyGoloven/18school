@@ -19,7 +19,6 @@ router.post("/add", auth,
         } catch (e) {
             res.status(500).json({message: "Помилка запису"})
         }
-
     })
 
 //  /api/test
@@ -28,11 +27,11 @@ router.post("/dayTest", auth,
     async (req, res) => {
 
         try {
-            const {userID, grade, date } = req.body
+            const {userID, grade, date} = req.body
 
             const tests = await Test.find({'grade': grade, 'date': date})
 
-            if (tests.length === 0){
+            if (tests.length === 0) {
                 return res.status(400).json({message: "На сьогодні немає тестів"})
             }
             res.json({tests})
@@ -40,10 +39,9 @@ router.post("/dayTest", auth,
         } catch (e) {
             res.status(500).json({message: "err /Request serv"})
         }
-
     })
 
-router.post("/myTests",auth,
+router.post("/myTests", auth,
 
     async (req, res) => {
 
@@ -55,7 +53,6 @@ router.post("/myTests",auth,
         } catch (e) {
             res.status(500).json({message: "err /Request serv"})
         }
-
     })
 
 router.delete("/testDel",
@@ -70,7 +67,6 @@ router.delete("/testDel",
         } catch (e) {
             res.status(500).json({message: "err /Request serv"})
         }
-
     })
 
 module.exports = router
