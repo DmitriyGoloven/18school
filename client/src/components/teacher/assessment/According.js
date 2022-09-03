@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
-import {Accordion, Card, Table, useAccordionButton} from "react-bootstrap";
+import {Accordion, Card, Col, Row, Table, useAccordionButton} from "react-bootstrap";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 
-const According = ({student, index}) => {
+const According = ({student, index, setTest, HandleShow}) => {
 
     const localUserID = localStorage.getItem("userToken")
 
     const [assessment, setAssessment] = useState(null)
     const {loading, request} = useHttp()
+
 
     const getStudentAssess = async (userID) => {
         try {
@@ -19,10 +20,9 @@ const According = ({student, index}) => {
             if (data.message) {
                 toast.info(data.message)
             }
-
             data.assessment && setAssessment(data.assessment)
 
-            console.log(assessment)
+
 
         } catch (e) {
             console.log(e)
@@ -30,28 +30,52 @@ const According = ({student, index}) => {
     }
 
 
-    function CustomToggle({children, eventKey}) {
+    const delStudentAssess = async (testID, userID) => {
+
+        delete assessment[testID]
+
+        try {
+            const data = await request("/api/data/answer", "POST", { assessment,userID}
+                , {Authorization: `Bearer ${localUserID}`}
+            )
+
+            if (data.message) {
+                toast.info(data.message)
+            }
+
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    function CustomToggle({children, eventKey, student}) {
         const decoratedOnClick = useAccordionButton(eventKey, () =>
             getStudentAssess(student._id),
         );
 
         return (
-            <p
+            <div style={{marginBottom:"0"}}
 
                 // className={"studentAssess"}
                 onClick={decoratedOnClick}
             >
                 {children}
-            </p>
+            </div>
         );
     }
 
     return (
-        <Accordion key={index}>
-            <Card key={index} className={"studentAssess"}>
-                <Card.Header key={index}>
-                    <CustomToggle eventKey={index}>
-                        {student.name + " " + student.grade}
+        <Accordion style={{cursor:"pointer"}}>
+            <Card className={"studentAssess"}>
+                <Card.Header >
+                    <CustomToggle eventKey={index} student={student}>
+                        <Row>
+                            <Col sm={1} md={1}>{index}</Col>
+                            <Col sm={9} md={7}>{student.name}</Col>
+                            <Col sm={2} md={4}>{student.grade}</Col>
+                        </Row>
                     </CustomToggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey={index}>
@@ -68,17 +92,23 @@ const According = ({student, index}) => {
                             {assessment && Object.values(assessment).map((test, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>
+                                        <td onClick={()=>{
+                                            setTest(test)
+                                            HandleShow()
+                                        }}>
 
                                             {test.date}
                                         </td>
-                                        <td>
+                                        <td onClick={()=>{
+                                            setTest(test)
+                                            HandleShow()
+                                        }}>
 
                                             {test.theme}
                                         </td>
                                         <td style={{cursor: "pointer"}}
                                             onClick={() => {
-                                                // delTest(test._id)
+                                                delStudentAssess(test.testID, student)
                                             }}>
                                             X
                                         </td>
@@ -89,9 +119,6 @@ const According = ({student, index}) => {
                             </tbody>
                         </Table>
 
-                        {/*<p key={index}>{test.date} {test.theme}</p>*/}
-                        {/*)*/}
-                        {/*})}*/}
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>

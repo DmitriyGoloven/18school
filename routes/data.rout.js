@@ -69,4 +69,23 @@ router.get("/students",
     })
 
 
+// router.delete("/delTest",
+//
+//     async (req, res) => {
+//
+//         try {
+//             const {testID, studentID} = req.body
+//             const student = await User.find({_id: studentID})
+//             const assessment = student.assessment
+//             console.log("ass" + assessment, "testid" + testID)
+//
+//             // res.json({message: "Учень видалений"})
+//
+//         } catch (e) {
+//             res.status(500).json({message: "err /Request serv"})
+//         }
+//
+//     })
+
+
 module.exports = router

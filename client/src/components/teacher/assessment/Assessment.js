@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Accordion, Card, Col, Container, Nav, Row, Table, useAccordionButton} from "react-bootstrap";
+import {Accordion, Card, Col, Container, Modal, Nav, Row, Table, useAccordionButton} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import {useHttp} from "../../../hooks/http.hook";
 import {toast} from "react-toastify";
 import Navigation from "../Navigation";
 import According from "./According";
+
 
 const Assessment = () => {
 
@@ -24,47 +25,11 @@ const Assessment = () => {
     const {loading, request} = useHttp()
     const [user, setUser] = useState([])
     const [students, setStudents] = useState([])
-    // const [student, setStudent] = useState(null)
+    const [test, setTest] = useState(null)
+    const [show, setShow] = useState(false)
 
-    // const getStudent = async (userID) => {
-    //     try {
-    //         const data = await request("/api/data/user", "POST", {userID}
-    //             , {Authorization: `Bearer ${localUserID}`}
-    //         )
-    //
-    //         if (data.message) {
-    //             toast.info(data.message)
-    //         }
-    //         // setStudent(data)
-    //         console.log(data)
-    //
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
-
-
-    // const delAsses = async (index) => {
-    //     const item = {...student}
-    //
-    //     item.assessment.splice(index, 1)
-    //     setStudent(item)
-    //
-    //     try {
-    //
-    //         const data = await request("/api/data/answer", "POST", {assessment: student.assessment, userID: student._id}
-    //             , {Authorization: `Bearer ${localUserID}`}
-    //         )
-    //
-    //         if (data.message === "Відповідь прийнята") {
-    //             toast.info("Відповідь видалена")
-    //         } else toast.info(data.message)
-    //
-    //
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // }
+    const HandleClose = () => setShow(false)
+    const HandleShow = () => setShow(true)
 
 
     const getStudents = async () => {
@@ -105,59 +70,42 @@ const Assessment = () => {
     return (
         <Container>
             <Navigation user={user}/>
-
-            {/*<div className={"blockStyle"}>*/}
-
-
-            {/*    <Table striped bordered hover size="xs">*/}
-            {/*        <thead>*/}
-            {/*        <tr>*/}
-            {/*            <th>Імʼя учня</th>*/}
-            {/*            <th>Клас</th>*/}
-            {/*            <th>X</th>*/}
-            {/*        </tr>*/}
-            {/*        </thead>*/}
-            {/*        <tbody>*/}
-            {/*        {students && students.map((children, index) => {*/}
-
-            {/*            return (*/}
-            {/*                <tr key={index}>*/}
-            {/*                    <td className={"td"}*/}
-            {/*                        onClick={() => {*/}
-            {/*                            getStudent(children._id)*/}
-            {/*                        }}>*/}
-            {/*                        {children.name}*/}
-            {/*                    </td>*/}
-            {/*                    <td*/}
-            {/*                        onClick={() => {*/}
-            {/*                            getStudent(children._id)*/}
-            {/*                        }}>*/}
-            {/*                        {children.grade}*/}
-            {/*                    </td>*/}
-            {/*                    <td style={{cursor: "pointer"}}*/}
-            {/*                        onClick={() => {*/}
-            {/*                            delStudent(children._id)*/}
-            {/*                        }}>*/}
-            {/*                        X*/}
-            {/*                    </td>*/}
-
-            {/*                </tr>*/}
-            {/*            )*/}
-            {/*        })*/}
-            {/*        }*/}
-            {/*        </tbody>*/}
-            {/*    </Table>*/}
-
-            {/*</div>*/}
             <div className={"blockStyle"}>
                 {students && students.map((student, index) => {
 
                     return (
-                        <According key={index} student={student} index={index} />
+                        <According key={index} setTest={setTest} HandleShow={HandleShow} student={student} index={index}/>
                     )
 
                 })}
             </div>
+
+            {test && <> <Modal size="lg" show={show} onHide={HandleClose}>
+                <Modal.Header closeButton >
+                   <h3>{test.theme}</h3>
+                </Modal.Header>
+                <Modal.Body >
+
+                    <Row key={test._id} className={"blockStyle"}>
+                        {Object.entries(test.answers).map((answer, index) => {
+                            return (<>
+                                <Row key={index}>
+                                    <h3>{index+1}) {answer[0]}</h3>
+                                </Row>
+                                <Row key={index+1} style={{backgroundColor: "white", marginLeft: "0px", borderRadius: "10px"}}>
+                                    <span key={index -1} style={{textAlign:"center", fontSize: "1.4em"}}>{typeof answer[1] === "string" ? answer[1] :
+                                        Object.values(answer[1]).map((ans,index)=>{return (<p key={index}>` ${ans}; `</p>)})
+                                    }</span>
+                                </Row>
+                            </>)
+                        })}
+                    </Row>
+                </Modal.Body>
+
+
+                    </Modal>
+                    </>}
+
         </Container>
     );
 };
