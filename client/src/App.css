@@ -125,7 +125,7 @@ input[type="checkbox"]:checked {
     border-radius: 50%;
 }
 .loader {
-    color: blue;
+    color: grey;
     font-size: 11px;
     text-indent: -99999em;
     margin: 55px auto;
