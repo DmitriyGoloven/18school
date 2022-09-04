@@ -124,20 +124,20 @@ const RegisterAndChange = () => {
                     {students && students.map((children, index) => {
 
                         return (
-                            <tr key={index}>
+                            <tr key={index} >
                                 <td className={"td"}
                                     onClick={() => {
                                         getStudent(children._id)
                                     }}>
                                     {children.name}
                                 </td>
-                                <td
+                                <td className={"td"}
                                     onClick={() => {
                                         getStudent(children._id)
                                     }}>
                                     {children.grade}
                                 </td>
-                                <td style={{cursor: "pointer"}}
+                                <td className={"td"}
                                     onClick={() => {
                                         delStudent(children._id)
                                     }}>

@@ -53,7 +53,8 @@ const Auth = () => {
 
     return (
         <div>
-            <Container fluid={"sm"} style={{padding: "10% 15%"}}>
+            {loading ? <div className="loader">Loading...</div> :
+                <Container fluid={"sm"} style={{padding: "10% 15%"}}>
                 <Form>
                     <h3>
                         Вхід
@@ -86,7 +87,7 @@ const Auth = () => {
                         Увійти
                     </Button>
                 </Form>
-            </Container>
+            </Container>}
         </div>
     );
 };

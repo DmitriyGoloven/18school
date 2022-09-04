@@ -97,7 +97,7 @@ const FormQuestions = ({localUserID, getTests}) => {
 
                 <Form.Label>
                     <h3>
-                        Створити опитування для учнів
+                        Додати тест для учнів
                     </h3>
                 </Form.Label>
 
@@ -166,7 +166,7 @@ const FormQuestions = ({localUserID, getTests}) => {
                         className="button"
                         disabled={!form.theme || !form.grade}
                     >
-                        Створити опитування
+                        Створити тест
                     </Button>
                 </div>
             </Form>

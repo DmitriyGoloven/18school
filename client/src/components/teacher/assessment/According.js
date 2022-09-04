@@ -62,7 +62,7 @@ const According = ({student, index, setTest, HandleShow}) => {
             <Card className={"studentAssess"}>
                 <Card.Header>
                     <CustomToggle eventKey={index} student={student}>
-                        <Row>
+                        <Row >
                             <Col xs={3} md={2}>{index + 1}</Col>
                             <Col xs={7} md={8}>{student.name}</Col>
                             <Col xs={2} md={2}>{student.grade}</Col>
@@ -72,7 +72,7 @@ const According = ({student, index, setTest, HandleShow}) => {
                 <Accordion.Collapse eventKey={index}>
                     <Card.Body>
 
-                        <Row className={"table"} style={{fontSize: "1.1em", fontWeight: "600"}}>
+                        <Row className={"table"} style={{fontWeight: "600"}}>
                             <Col xs={3} md={2}>Дата тесту</Col>
                             <Col xs={7} md={8}>Тема тесту</Col>
                             <Col xs={2} md={2}>X</Col>
