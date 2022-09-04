@@ -34,9 +34,9 @@ const According = ({student, index, setTest, HandleShow}) => {
             const data = await request("/api/data/answer", "POST", {assessment, userID}
                 , {Authorization: `Bearer ${localUserID}`})
 
-            if (data.message) {
-                toast.info(data.message)
-            }
+            if (data.message && data.message === "Відповідь прийнята") {
+                toast.info("Тест видалено")
+            } else toast.info(data.message)
 
         } catch (e) {
             console.log(e)
@@ -63,52 +63,51 @@ const According = ({student, index, setTest, HandleShow}) => {
                 <Card.Header>
                     <CustomToggle eventKey={index} student={student}>
                         <Row>
-                            <Col sm={1} md={1}>{index}</Col>
-                            <Col sm={9} md={7}>{student.name}</Col>
-                            <Col sm={2} md={4}>{student.grade}</Col>
+                            <Col xs={3} md={2}>{index + 1}</Col>
+                            <Col xs={7} md={8}>{student.name}</Col>
+                            <Col xs={2} md={2}>{student.grade}</Col>
                         </Row>
                     </CustomToggle>
                 </Card.Header>
                 <Accordion.Collapse eventKey={index}>
                     <Card.Body>
-                        <Table striped bordered hover size="xs">
-                            <thead>
-                            <tr>
-                                <th>Дата тесту</th>
-                                <th>Тема тесту</th>
-                                <th>X</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {assessment && Object.values(assessment).map((test, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td onClick={() => {
-                                            setTest(test)
-                                            HandleShow()
-                                        }}>
 
-                                            {test.date}
-                                        </td>
-                                        <td onClick={() => {
-                                            setTest(test)
-                                            HandleShow()
-                                        }}>
+                        <Row className={"table"} style={{fontSize: "1.1em", fontWeight: "600"}}>
+                            <Col xs={3} md={2}>Дата тесту</Col>
+                            <Col xs={7} md={8}>Тема тесту</Col>
+                            <Col xs={2} md={2}>X</Col>
+                        </Row>
 
-                                            {test.theme}
-                                        </td>
-                                        <td style={{cursor: "pointer"}}
-                                            onClick={() => {
-                                                delStudentAssess(test.testID, student)
-                                            }}>
-                                            X
-                                        </td>
 
-                                    </tr>
-                                )
-                            })}
-                            </tbody>
-                        </Table>
+                        {assessment && Object.values(assessment).map((test, index) => {
+                            return (
+                                <Row className={"table"} key={index}>
+                                    <Col xs={3} md={2} onClick={() => {
+                                        setTest(test)
+                                        HandleShow()
+                                    }}>
+
+                                        {test.date}
+                                    </Col>
+                                    <Col xs={7} md={8} onClick={() => {
+                                        setTest(test)
+                                        HandleShow()
+                                    }}>
+
+                                        {test.theme}
+                                    </Col>
+                                    <Col xs={2} md={2} style={{cursor: "pointer"}}
+                                         onClick={() => {
+                                             delStudentAssess(test.testID, student)
+                                         }}>
+                                        X
+                                    </Col>
+
+                                </Row>
+                            )
+                        })}
+
+
                     </Card.Body>
                 </Accordion.Collapse>
             </Card>

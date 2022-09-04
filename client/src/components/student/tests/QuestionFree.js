@@ -10,7 +10,7 @@ const QuestionFree = ({question, number, changeHandler}) => {
             <FloatingLabel controlId={question[`Q${number}`]} label="Відповідь">
                 <Form.Control
                     as="textarea"
-                    name={question[`Q${number}`]}
+                    name={number+"."+question[`Q${number}`]}
                     placeholder={"Відповідь"}
                     style={{height: '100px'}}
                     onChange={() => changeHandler(event, number)}

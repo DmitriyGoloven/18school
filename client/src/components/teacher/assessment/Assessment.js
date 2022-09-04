@@ -88,7 +88,7 @@ const Assessment = () => {
                         {Object.entries(test.answers).map((answer, index) => {
                             return (<div key={index} style={{marginTop: "25px"}}>
                                 <Row key={answer[0]}>
-                                    <h3>{index + 1}) {answer[0]}</h3>
+                                    <h3> {answer[0]}</h3>
                                 </Row>
                                 <Row key={index}
                                      style={{backgroundColor: "white", marginLeft: "0px", borderRadius: "10px"}}>
@@ -97,7 +97,7 @@ const Assessment = () => {
                                         fontSize: "1.4em"
                                     }}>{typeof answer[1] === "string" ? answer[1] :
                                         Object.values(answer[1]).map((ans, index) => {
-                                            return (<p key={index}>` ${ans}; `</p>)
+                                            return (<p key={index}>{ans};</p>)
                                         })
                                     }</span>
                                 </Row>

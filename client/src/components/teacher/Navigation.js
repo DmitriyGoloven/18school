@@ -7,7 +7,7 @@ const Navigation = ({user}) => {
         <div>
             <Nav fill variant="tabs" style={{margin: "1.5em 0"}}>
                 <Nav.Item>
-                    <NavLink className={"App-link"} to="/teacher">Додати тест</NavLink>
+                    <NavLink className={"App-link"} to="/teacher">Тести</NavLink>
                 </Nav.Item>
 
                 <Nav.Item>

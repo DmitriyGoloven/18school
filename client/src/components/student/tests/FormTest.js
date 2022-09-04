@@ -30,7 +30,7 @@ const FormTest = ({test, userID, setUser}) => {
                 delete answer2.answers[pickerName][event.target.name]
             }
             setAnswer(answer2)
-
+            console.log(answer)
             return
         }
 
@@ -74,6 +74,7 @@ const FormTest = ({test, userID, setUser}) => {
                     return <div key={index}><Question changeHandler={changeHandler}
                                                       question={q[1]}
                                                       number={q[0]}
+                                                      testID={test._id}
                     /></div>
                 case 'free':
                     return <div key={index}><QuestionFree changeHandler={changeHandler}
@@ -84,6 +85,7 @@ const FormTest = ({test, userID, setUser}) => {
                     return <div key={index}><QuestionPicker changeHandler={changeHandler}
                                                             question={q[1]}
                                                             number={q[0]}
+                                                            testID={test._id}
                     /></div>
                 default:
                     return <p>Тестів сьогодні немає</p>

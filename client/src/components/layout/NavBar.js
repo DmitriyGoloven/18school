@@ -1,4 +1,4 @@
-import {Container, Navbar, Button} from "react-bootstrap";
+import {Container, Navbar, Button, Row, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import logo from "./logo.png"
 
@@ -10,10 +10,10 @@ const NavBar = () => {
     return (
         <Navbar style={{opacity: "0.8"}} expand="md" bg="dark" variant="dark">
             <Container>
-                <div className="justify-content-start">
+                <div className="justify-content-start" >
                     <h3 style={{color: "whitesmoke"}}>Тестування<br/>для учнів</h3>
                 </div>
-                <Navbar.Brand
+                <Navbar.Brand className={"d-none d-sm-block"}
                     onClick={() => {
                         navigate("/", {replace: true})
                     }}>
@@ -23,10 +23,10 @@ const NavBar = () => {
                         height="70px"
                         alt="ЗСШФК 18"
                     />
-                    <h1>ЗСШФК №18</h1>
+                    <h3>ЗСШФК №18</h3>
                 </Navbar.Brand>
 
-                <div className="justify-content-end" style={{margin: "0 30px"}}>
+                <div className="justify-content-end"   style={{margin: "0 40px"}}>
 
                     <Button variant={"secondary"}
                             onClick={() => {

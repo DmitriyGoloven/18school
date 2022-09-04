@@ -6,7 +6,7 @@ const Footer = () => {
     return (
         <>
             <Container fluid className={"footer"}>
-                <span style={{fontSize: "11px", color: "white"}}>©2022 DmitriyGOL</span>
+                <span style={{fontSize: "11px", color: "white"}}>©2022 Holoven M.M.</span>
             </Container>
         </>
     );
