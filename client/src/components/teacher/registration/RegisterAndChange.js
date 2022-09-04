@@ -47,7 +47,6 @@ const RegisterAndChange = () => {
             }
             setStudent(data)
             HandleShow()
-            console.log("registerandch s46", data)
 
         } catch (e) {
             console.log(e)

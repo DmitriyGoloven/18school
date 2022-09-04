@@ -16,18 +16,19 @@ const FormRegistry = ({getStudents}) => {
     }
 
     const registerHandler = async () => {
+
         try {
             const data = await request("/api/auth/register", "POST", {...form})
             if (data.message) {
                 toast.success(data.message)
             }
 
-            if (data) {
-
+            if (data.message === "Користувач створений") {
+                getStudents()
                 await setForm({...form, email: "", password: "", name: ""})
 
                 document.getElementById("form").reset()
-                getStudents()
+
             }
         } catch (e) {
             console.log(e)
@@ -36,6 +37,7 @@ const FormRegistry = ({getStudents}) => {
 
     return (
         <div className={"blockStyle"}>
+            {loading ? <div className="loader">Loading...</div> :
             <Container style={{padding: "3% 10%"}}>
                 <Form id={"form"}>
                     <Form.Label><h3>
@@ -52,7 +54,7 @@ const FormRegistry = ({getStudents}) => {
                         />
 
                         <Form.Label>Повне ім'я учня</Form.Label>
-                        <Form.Control className={"name"}
+                        <Form.Control
                                       name={"name"}
                                       type={"text"}
                                       placeholder="Ім'я"
@@ -72,7 +74,8 @@ const FormRegistry = ({getStudents}) => {
                         <Form.Control className={"upperCase"}
                                       name={"grade"}
                                       type="text"
-                                      placeholder="5А"
+                                      placeholder="6А"
+                                      defaultValue={"6А"}
                                       onChange={changeHandler}
                         />
                     </Form.Group>
@@ -81,13 +84,13 @@ const FormRegistry = ({getStudents}) => {
                         onClick={registerHandler}
                         variant="secondary"
                         size="lg"
-                        type="submit"
+                        // type="submit"
                         disabled={loading || !form.email || !form.password || !form.name || !form.grade}
                     >
                         Зареєсувати
                     </Button>
                 </Form>
-            </Container>
+            </Container>}
         </div>
     );
 };

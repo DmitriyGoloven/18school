@@ -69,9 +69,6 @@ input[type="checkbox"]:checked {
     border-radius: 20px
 }
 
-.name {
-    text-transform: capitalize;
-}
 
 .upperCase {
     text-transform: uppercase;

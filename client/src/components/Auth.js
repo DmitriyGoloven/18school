@@ -80,8 +80,8 @@ const Auth = () => {
                     </Form.Group>
                     <Button
                         onClick={loginHandler}
-                        variant="primary"
-                        type="submit"
+                        variant="secondary"
+                        // type="submit"
                         disabled={loading}
                     >
                         Увійти

@@ -47,7 +47,7 @@ const FormStudent = ({student, HandleClose}) => {
                 />
 
                 <Form.Label className={"testLabel"}>Повне ім'я учня</Form.Label>
-                <Form.Control className={"name"}
+                <Form.Control
                               name={"name"}
                               type={"text"}
                               defaultValue={student.name}
